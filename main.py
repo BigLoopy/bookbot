@@ -4,9 +4,9 @@ def main():
     word_count = count_words(text)
     letters = get_letter_count(text)
 
-    print(f"analyzing {book_to_analyze}")
-    print(f"Number of words: {word_count}")
-    print(f"Letter Counts: {letters}")
+    print(f"--- Begin report of {book_to_analyze} ---")
+    print(f"{word_count} words found in the document")
+    print_letters_in_order(letters)
 
 def get_book_text(path):
     with open("books/frankenstein.txt") as f:
@@ -22,7 +22,26 @@ def get_letter_count(text):
             letters[letter] = 0
         letters[letter] += 1
 
-    return letters
+    #print(letters)
+    letters_list = []
+    for letter in letters:
+        letters_list.append({"letter":letter, "count": letters[letter]})
+
+    #print(letters_list)
+    return letters_list
+
+def sort_on(dict):
+    #print(dict["count"])
+    return dict["count"]
+
+def print_letters_in_order(letters):
+    letters.sort(reverse=True,key=sort_on)
+    for letter in letters:
+        if (letter["letter"].isalpha()):
+            print(f"The '{letter["letter"]}' character was found {letter["count"]} times")
+    
+    
+
 
 main()
 
